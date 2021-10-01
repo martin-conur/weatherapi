@@ -1,13 +1,14 @@
 ## wapi: Weather API
 
 wapi is a simple python library that allows you to get weather data from weatherapi.com,
-you just need to have a key (free access)::
+you just need to have a key (free access)
 
 ### Installation
     pip install wapi
 
 ### Using wapi
 
+   ```python 
    #!/usr/bin/env python
 
     from wapi import WeatherPoint
@@ -29,6 +30,7 @@ you just need to have a key (free access)::
     point.localtime # local datetime of the request
 
     # soon all the docs availables
+    ```
 
 
 Visit and contribute to our Github repo <url>https://github.com/martin-conur/wapi</url>
