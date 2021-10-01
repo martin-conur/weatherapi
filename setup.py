@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='weatherapi',
-    version='0.0.2',
+    version='0.0.3',
     author='Martin Conur',
     author_email='martincontrerasur@gmail.com',
     packages=['weatherapi'],

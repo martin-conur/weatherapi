@@ -18,7 +18,11 @@ you just need to have a key (free access)
     latitude = -33.9
     longitude = 50.48
 
-    point = WeatherPoint(key, latitude, longitude)
+    # Initializing the WeatherPoint
+    point = WeatherPoint(latitude, longitude)
+
+    # Setting the key for data access
+    point.set_key(key)
 
     # get current weather data
     point.get_current_weather()

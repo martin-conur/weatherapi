@@ -8,11 +8,20 @@ class StatusCodeError(Exception):
 
 @dataclass
 class WeatherPoint:
-    key: float
+    
+    """Point entity to get weather data from.
+    
+        WeatherPoint is main object in weatherapi, its defined by its latitude and longitude. WeatherPoint methods are
+        get_current_weather(), set_key() and get_forecast() # SOON 
+        
+        Attributes:
+            lat: float that represents the latitude of the WeatherPoint.
+            lon: float that represents the longitude of the WeatherPoint.
+        """
     lat: float
     lon: str
 
-    def get_data(self, url):
+    def _get_data_(self, url):
         """Make a request and reassure that got a correct response (200), otherwise rise an error"""
 
         r = requests.get(url)
@@ -29,10 +38,15 @@ class WeatherPoint:
         else:
             raise Exception("Can't connect to the API")
 
-        
+    def set_key(self, key:str):
+        self.key = key
     
     def get_current_weather(self):
-        """Gets current weather of the coordinate Point"""
+        """Gets current weather of the WeatherPoint coordinate"""
+        try:
+            self.key
+        except:
+            raise AttributeError("'key' Attribute not defined. You should define the key attribute throught the set_key() method.")
 
         # parameters of the api call for current weather
         params = dict(
@@ -45,7 +59,7 @@ class WeatherPoint:
         full_url = base_url + "&".join(url) # concatenating
 
         # making the request
-        r = self.get_data(full_url)
+        r = self._get_data_(full_url)
 
         rjson = r.json()
         
@@ -80,3 +94,8 @@ class WeatherPoint:
         self.gust_kph = rjson["current"].get("gust_kph", None)
         
     
+a = WeatherPoint(1, 2)
+# a.set_key("e09bd02105a0402982d221246212809")
+a.get_current_weather()
+
+print(a.humidity)
