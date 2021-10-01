@@ -10,7 +10,8 @@ setup(
     url='http://pypi.python.org/pypi/wapi/',
     license='LICENSE.txt',
     description='weatherapi.com python access',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
+    long_description_content_type="text/markdown",
     install_requires=[
         "requests >= 2.26.0"
     ],
