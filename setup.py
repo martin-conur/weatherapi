@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(
-    name='apiweather',
+    name='weatherapi',
     version='0.0.1',
     author='Martin Conur',
     author_email='martincontrerasur@gmail.com',
-    packages=['apiweather'],
+    packages=['weatherapi'],
     scripts=[],
     url='http://pypi.python.org/pypi/apiweather/',
     license='LICENSE.txt',

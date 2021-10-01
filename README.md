@@ -1,17 +1,17 @@
-## apiweather: Weather API
+## weatherapi: Get weather data easily
 
-apiweather is a simple python library that allows you to get weather data from weatherapi.com,
+weatherapi is a simple python library that allows you to get weather data from weatherapi.com,
 you just need to have a key (free access)
 
 ### Installation
-    pip install apiweather
+    pip install weatherapi
 
-### Using apiweather
+### Using weatherapi
 
    ```python 
    #!/usr/bin/env python
 
-    from apiweather import WeatherPoint
+    from weatherapi import WeatherPoint
 
     # set a point of interest where we want to get weather data from
     key = {VALID KEY}
@@ -33,4 +33,4 @@ you just need to have a key (free access)
 ```
 
 
-Visit and contribute to our Github repo <url>https://github.com/martin-conur/wapi</url>
+Visit and contribute to our Github repo <url>https://github.com/martin-conur/weatherapi</url>
