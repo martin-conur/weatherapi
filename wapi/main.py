@@ -1,55 +1,82 @@
 from dataclasses import dataclass
-import numpy as np
 import requests
 
+# Custom errors
+class StatusCodeError(Exception):
+    pass
+
+
 @dataclass
-class Point():
-    def __init__(self, key, lat, lon):
-        self.lat = lat
-        self.lon = lon
-        self.key = key
+class WeatherPoint:
+    key: float
+    lat: float
+    lon: str
+
+    def get_data(self, url):
+        """Make a request and reassure that got a correct response (200), otherwise rise an error"""
+
+        r = requests.get(url)
+
+        # Checking response status code
+        if r.status_code == 200: # everything its alrighty
+            return r
+
+        elif r.status_code in [400, 401, 403]:
+            error_code = r.json()["error"]["code"]
+            error_message = r.json()["error"]["message"]
+            raise StatusCodeError(f"{error_message} - Error code: {error_code}")
+
+        else:
+            raise Exception("Can't connect to the API")
+
+        
     
     def get_current_weather(self):
+        """Gets current weather of the coordinate Point"""
+
         # parameters of the api call for current weather
         params = dict(
             key = self.key, # personal key
             q = ",".join([str(self.lat),str(self.lon)]), # coordinates 
-            aqi = "yes") # show data
+            aqi = "yes") # air quality data
 
-        url = "http://api.weatherapi.com/v1/current.json?" # base url
-        self.url = [str(key)+"="+str(value) for key, value in params.items()] # the rest of the url
-        self.url = url + "&".join(self.url) # concatenating
+        base_url = "http://api.weatherapi.com/v1/current.json?" # base url
+        url = [str(key)+"="+str(value) for key, value in params.items()] # the rest of the url
+        full_url = base_url + "&".join(url) # concatenating
 
         # making the request
-        request_ = requests.get(self.url).json() 
+        r = self.get_data(full_url)
 
-        # setting variables to Point
-        self.name = request_["location"]["name"]
-        self.region = request_["location"]["region"]
-        self.country = request_["location"]["country"]
-        self.tz = request_["location"]["tz_id"]
-        self.localtime_timestamp = request_["location"]["localtime_epoch"]
-        self.localtime = request_["location"]["localtime"]
-        self.last_updated = request_["current"]["last_updated"]
-        self.temp_c = request_["current"]["temp_c"]
-        self.is_day = request_["current"]["is_day"]
-        self.condition = request_["current"]["condition"]["text"]
-        self.condition_code = request_["current"]["condition"]["code"],
-        self.wind_kph = request_["current"]["wind_kph"]
-        self.wind_degree = request_["current"]["wind_degree"]
-        self.wind_dir = request_["current"]["wind_dir"]
-        self.pressure_mb = request_["current"]["pressure_mb"]
-        self.precip_mm = request_["current"]["pressure_mb"]
-        self.humidity = request_["current"]["humidity"]
-        self.cloud = request_["current"]["cloud"]
-        self.feelslike_c = request_["current"]["feelslike_c"]
-        self.visibility_km = request_["current"]["vis_km"]
-        self.gust_kph = request_["current"]["gust_kph"]
-
-
-a = Point("e09bd02105a0402982d221246212809", -41.46574, -72.94289)
-a.get_current_weather()
-print(a.temp_c)
-
+        rjson = r.json()
         
-        #http://api.weatherapi.com/v1/current.json?key=e09bd02105a0402982d221246212809&q=-41.4657,-72.94289&aqi=yes
+        # checking if 'location' and 'current' in rjson
+
+        if "location" not in rjson.keys() or "current" not in rjson.keys():
+            raise Exception("location and/or current data not found in the request")
+        
+               
+        # setting variables to Point
+        self.name = rjson["location"].get("name", None)
+        self.region = rjson["location"].get("region", None)
+        self.country = rjson["location"].get("country", None)
+        self.tz = rjson["location"].get("tz_id", None)
+        self.localtime_timestamp = rjson["location"].get("localtime_epoch", None)
+        self.localtime = rjson["location"].get("localtime", None)
+        self.last_updated = rjson["current"].get("last_updated", None)
+        self.temp_c = rjson["current"].get("temp_c", None)
+        self.is_day = rjson["current"].get("is_day", None)
+        self.condition = rjson["current"]["condition"].get("text", None)
+        self.condition_code = rjson["current"]["condition"].get("code", None)
+        self.wind_kph = rjson["current"].get("wind_kph", None)
+        self.wind_degree = rjson["current"].get("wind_degree", None)
+        self.wind_dir = rjson["current"].get("wind_dir", None)
+        self.pressure_mb = rjson["current"].get("pressure_mb", None)
+        self.precip_mm = rjson["current"].get("precip_mm", None)
+        self.humidity = rjson["current"].get("humidity", None)
+        self.cloud = rjson["current"].get("cloud", None)
+        self.feelslike_c = rjson["current"].get("feelslike_c", None)
+        self.visibility_km = rjson["current"].get("vis_km", None)
+        self.uv = rjson["current"].get("uv", None)
+        self.gust_kph = rjson["current"].get("gust_kph", None)
+        
+    
