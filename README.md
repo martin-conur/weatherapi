@@ -1,2 +1,2 @@
-# python-weatherapi
-Python script to call the OpenWeather API
+# Weather API 
+Python library for weather data collection, using apiweather.com API
