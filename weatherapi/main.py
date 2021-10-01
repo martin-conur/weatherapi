@@ -92,10 +92,4 @@ class WeatherPoint:
         self.visibility_km = rjson["current"].get("vis_km", None)
         self.uv = rjson["current"].get("uv", None)
         self.gust_kph = rjson["current"].get("gust_kph", None)
-        
     
-a = WeatherPoint(1, 2)
-# a.set_key("e09bd02105a0402982d221246212809")
-a.get_current_weather()
-
-print(a.humidity)
