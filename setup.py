@@ -1,13 +1,13 @@
 from setuptools import setup
 
 setup(
-    name='wapi',
+    name='apiweather',
     version='0.0.1',
     author='Martin Conur',
     author_email='martincontrerasur@gmail.com',
-    packages=['wapi'],
+    packages=['apiweather'],
     scripts=[],
-    url='http://pypi.python.org/pypi/wapi/',
+    url='http://pypi.python.org/pypi/apiweather/',
     license='LICENSE.txt',
     description='weatherapi.com python access',
     long_description=open('README.md').read(),

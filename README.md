@@ -30,7 +30,7 @@ you just need to have a key (free access)
     point.localtime # local datetime of the request
 
     # soon all the docs availables
-    ```
+```
 
 
 Visit and contribute to our Github repo <url>https://github.com/martin-conur/wapi</url>
