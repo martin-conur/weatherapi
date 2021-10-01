@@ -1,1 +1,1 @@
-from main import WeatherPoint
+from .main import WeatherPoint
