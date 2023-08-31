@@ -37,4 +37,4 @@ you just need to have a key (free access)
 ```
 
 
-Visit and contribute to our Github repo <url>https://github.com/martin-conur/weatherapi</url>
+Visit and contribute to our [Github repository](https://github.com/martin-conur/weatherapi)
